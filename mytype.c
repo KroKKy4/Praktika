@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
-#include "huinya.h"
+#include "mytype.h"
 
 
 typedef struct cars bmw_m8;
