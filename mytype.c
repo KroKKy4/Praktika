@@ -7,7 +7,7 @@
 
 typedef struct cars bmw_m8;
 
-bmw_m8* Constructor(char* car_number, int fuel, int mileage, int tuning, int drifting, int safety,int driving_skills) // пользователь записывает всю информацию о машине
+bmw_m8* Constructor(char* car_number, int fuel, int mileage, int tuning, int drifting, int safety, int driving_skills) // пользователь записывает всю информацию о машине
 {
 	bmw_m8* bmw = malloc(sizeof(bmw_m8));
 	if (!bmw)
@@ -50,14 +50,14 @@ bmw_m8* Constructor(char* car_number, int fuel, int mileage, int tuning, int dri
 	bmw->car_number[i] = '\0';
 
 	return bmw;
+	
 
 }
 
-void Volume_of_engine(bmw_m8 bmw)
+void Volume_of_engine(bmw_m8 bmw,int volume)
 {
 	int mark_of_engine = 0;
-	float volume = 0;
-	scanf_s("%c", &volume);
+	scanf_s("%d", &volume);
 
 
 	if (volume < 1) {
@@ -69,15 +69,15 @@ void Volume_of_engine(bmw_m8 bmw)
 		printf("Average car");
 		mark_of_engine = 2;
 	}
-	if (volume > 2 && volume <= 3.5) {
+	if (volume > 2 && volume <= 4) {
 		printf("Nice car");
 		mark_of_engine = 3;
 	}
-	if (volume > 3.5 && volume <= 4.5) {
+	if (volume > 4 && volume <= 5) {
 		printf("Very nice car");
 		mark_of_engine = 4;
 	}
-	if (volume > 4.5) {
+	if (volume > 6) {
 		printf("Amazing car");
 		mark_of_engine = 5;
 	}
@@ -86,34 +86,33 @@ void Volume_of_engine(bmw_m8 bmw)
 }
 
 
-void Refuel(bmw_m8 bmw,int fuel)
+void Refuel(bmw_m8 bmw, int fuel)
 {
 	bmw.fuel = 50;
 	printf("Fuel is full.\n");
+	printf("\n");
 }
 
 
 
-void tuning(int mark_of_engine, bmw_m8 bmw,int speed,int mileage,int beautiful,int safety)
+void tuning(int mark_of_engine, bmw_m8 bmw, int speed, int mileage, int beautiful, int safety)
 {
 
-	int ans = 0;
-	printf("You want to make a tuning on your car?\n Print 1 if ans is yes, else 2");
+	int ans = 1;
+	printf("You want to make a tuning on your car?\n");
+	printf("Print 1 if ans is yes, else 2 "); 
 	scanf_s("%d", &ans);
 	printf("\n");
+	printf_s("Print '1' if you want more speed,'2' if you want new weels,'3' if you want new car brakes, or '4' we can do random customize");
+	printf("\n");
 
-
+	int probably_tuning = 0;
+	scanf_s("%d", &probably_tuning);
 	if (ans == 1)
 	{
-		srand(time(NULL));
+		
 
-		printf_s("Print 'M' if you want more speed,'W' if you want new weels,'B' if you want new car brakes, or 'S' we can do rabdom customize");
-		printf("\n");
-
-		char probably_tuning = '\0';
-		scanf_s("%c", &probably_tuning);
-
-		if (probably_tuning == 'M')
+		if (probably_tuning == 1)
 		{
 			printf("Good choise\n");
 			bmw.speed = bmw.speed + 30;
@@ -121,14 +120,14 @@ void tuning(int mark_of_engine, bmw_m8 bmw,int speed,int mileage,int beautiful,i
 
 		}
 
-		if (probably_tuning == 'W')
+		if (probably_tuning == 2)
 		{
 			printf("Good choise\n");
 			bmw.beautiful = bmw.beautiful * 2;
 
 		}
 
-		if (probably_tuning == 'B')
+		if (probably_tuning == 3)
 		{
 			printf("Good choise\n");
 			bmw.safety = bmw.safety + 50;
@@ -136,39 +135,43 @@ void tuning(int mark_of_engine, bmw_m8 bmw,int speed,int mileage,int beautiful,i
 
 		}
 
-		if (probably_tuning == 'S')
+		if (probably_tuning == 4)
 		{
 			printf("Surprise!!!\n");
 			bmw.safety = bmw.safety + 25;
 			bmw.speed = bmw.speed + 15;
 			bmw.mileage = bmw.mileage - 8000;
 		}
-		else 
-			printf("It`s your choise\n");
+		
 
 	}
+	else
+		printf("It`s your choise\n");
+	printf("\n");
 
 }
 
 
 
-void race(bmw_m8 bmw,int fuel,int mileage,int safety) {
+void race(bmw_m8 bmw, int fuel, int mileage, int safety) {
 
 	srand(time(NULL));
 	printf("You see Volga. Let's destroy it.\n");
 
 	bmw_m8* volga = Constructor("Volga", 228, 30, 350000, 0, 0, 0);
-	char action = '\0';
+	int action = 0;
+
+	printf("You on crossroad, wanna to make a competiton?");
+	printf("\n");
+	printf("'1' if yes, else '2'");
+	printf("\n");
+	scanf_s("%d", &action);
 
 	while (bmw.fuel > 0 && volga->fuel > 0) {
 
-		printf("You on crossroad, wanna to make a competiton?\nPrint 'Y' if yes, else 'N'");
-		scanf_s("%c", &action);
-
-		if (action == 'Y')
+		if (action == 1)
 		{
 			int P_action = rand() % 2;
-
 			if (P_action == 1)
 			{
 				bmw.fuel = bmw.fuel - 5;
@@ -177,7 +180,8 @@ void race(bmw_m8 bmw,int fuel,int mileage,int safety) {
 				volga->fuel = volga->fuel - 10;
 				volga->mileage = volga->mileage + 8;
 				volga->safety = volga->safety - 5;
-				print("You win\n");
+				printf("You win\n");
+				bmw.fuel = 0;
 
 			}
 			else
@@ -188,38 +192,53 @@ void race(bmw_m8 bmw,int fuel,int mileage,int safety) {
 				volga->fuel = volga->fuel - 5;
 				volga->mileage = volga->mileage + 5;
 				volga->safety = volga->safety + 5;
-				print("You loose\n");
+				printf("You lose\n");
+				volga->fuel = 0;
 			}
 
 		}
-		else
+		else {
 			printf("No problems\n");
-	
+			bmw.fuel = 0;
+			volga->fuel = 0;
+
+		}
+		printf("\n");
+			
+		
 	}
 
 
 }
 
-void drifting(bmw_m8* bmw,int driving_skills,int safety) {
+void drifting(bmw_m8* bmw, int driving_skills, int safety) {
 
-	if (driving_skills == 0) {
+	int skills = 0;
+	printf("enter your driving skills, 0 - newbie, 1 - middle, 2 - pro");
+	printf("\n");
+	scanf_s("%d", &skills);
 
-		printf("don`t drift please\n");
+	if (skills == 0) {
+
+		printf("don`t drift please");
+		printf("\n");
 		bmw->safety = bmw->safety - 100;
 
 	}
-	if (driving_skills == 1) {
+	if (skills == 1) {
 
 		printf("drift very accurate\n");
+		printf("\n");
 		bmw->safety = bmw->safety - 50;
 	}
-	if (driving_skills == 2) {
+	if (skills == 2) {
 
 		printf("show your skills!!!\n");
+		printf("\n");
 		bmw->safety;
 	}
 
-
+	printf("\n");
 }
 
 
